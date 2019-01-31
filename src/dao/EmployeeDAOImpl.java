@@ -1,8 +1,14 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import domain.EmployeeDTO;
+import enums.EmployeeSQL;
+import enums.Vendor;
+import factory.DatabasFactory;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 	private static EmployeeDAOImpl instance = new EmployeeDAOImpl();
@@ -12,8 +18,29 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public void insertEmployee(EmployeeDTO emp) {
-		// TODO Auto-generated method stub
-		
+		try {
+			String sql = EmployeeSQL.REGISTER.toString();
+			
+			System.out.println("실행할 쿼리: "+sql);
+			
+			Connection conn = 
+			DatabasFactory.createDatabase(Vendor.ORACLE).getConnection();
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,emp.getManager());
+			pstmt.setString(2,emp.getName());
+			pstmt.setString(3,emp.getBirthDate());
+			pstmt.setString(4,emp.getPhoto());
+			pstmt.setString(5,emp.getNotes());
+			
+			int rs = pstmt.executeUpdate();
+			
+			System.out.println((rs==1) ? "성공":"실패");
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

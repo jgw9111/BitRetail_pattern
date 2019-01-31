@@ -11,12 +11,11 @@ public class Commander {
 		System.out.println("=== 3  커맨더진입 ===");
 		Command cmd = null;
 		switch (Action.valueOf(request.getParameter("cmd").toUpperCase())) {
-		case MOVE:
+		case MOVE: case REGISTER:
 			cmd = new MoveCommand(request);
 			break;
+			
 
-		default:
-			break;
 		}
 		
 		return cmd;

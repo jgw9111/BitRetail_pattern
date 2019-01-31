@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import command.Carrier;
 import command.Receiver;
+import domain.EmployeeDTO;
 import enums.Action;
 import service.EmployeeService;
 import service.EmployeeServiceImpl;
@@ -25,10 +26,20 @@ public class EmployeeController extends HttpServlet {
 		/*String action = Receiver.cmd.getAction();*/
 		switch (Action.valueOf(Receiver.cmd.getAction().toUpperCase())) {
 		case MOVE:
+			System.out.println("==무브진입==");
 			Carrier.forward(request, response);
 			break;
-
-		default:
+			
+		case REGISTER:
+			System.out.println("==레지스터진입==");
+			EmployeeDTO emp = new EmployeeDTO();
+			emp.setBirthDate(request.getParameter("birth_date"));
+			emp.setManager(request.getParameter("manager"));
+			emp.setName(request.getParameter("name"));
+			emp.setNotes(request.getParameter("desc"));
+			emp.setPhoto(request.getParameter("photo"));
+			service.registerEmployee(emp);
+			Carrier.forward(request, response);
 			break;
 		}
 	}

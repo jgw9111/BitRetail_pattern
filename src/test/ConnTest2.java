@@ -25,7 +25,7 @@ public class ConnTest2 {
 			while(rs.next()) {
 				count = rs.getString("COUNT");
 			}
-			System.out.println("회원의 이름은 ::"+count);
+			System.out.println("회원의 수 ::"+count);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {

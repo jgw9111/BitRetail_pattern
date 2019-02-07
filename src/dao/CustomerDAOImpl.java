@@ -1,8 +1,13 @@
 package dao;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import domain.CustomerDTO;
+import enums.CustomerSQL;
+import enums.Vendor;
+import factory.DatabasFactory;
 
 public class CustomerDAOImpl implements CustomerDAO{
 	private static CustomerDAOImpl instance = new CustomerDAOImpl();
@@ -11,8 +16,28 @@ public class CustomerDAOImpl implements CustomerDAO{
 
 	@Override
 	public void insertCustomer(CustomerDTO cus) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("===Customer DAOImpl===");
+		try {
+			PreparedStatement pstmt = DatabasFactory
+										.createDatabase(Vendor.ORACLE)
+										.getConnection()
+										.prepareStatement(CustomerSQL.SIGNUP.toString());
+			
+			pstmt.setString(1,cus.getCustomerID());
+			pstmt.setString(2,cus.getCustomerName());
+			pstmt.setString(3,cus.getPassword());
+			pstmt.setString(4,cus.getSsn());
+			pstmt.setString(5,cus.getCity());
+			pstmt.setString(6,cus.getPostalCode());
+			pstmt.setString(7,cus.getAddress());
+			
+			int rs = pstmt.executeUpdate();
+			System.out.println((rs==1) ? "성공":"실패");
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

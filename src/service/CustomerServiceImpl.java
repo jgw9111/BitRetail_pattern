@@ -30,8 +30,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public CustomerDTO retrieveCustomer(String searchWord) {
-		return dao.selectCustomer(searchWord);
+	public CustomerDTO retrieveCustomer(CustomerDTO cus) {
+		return dao.selectCustomer(cus);
 	}
 
 	@Override
@@ -40,8 +40,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public boolean existCustomer(String searchWord) {
-		return dao.existCustomer(searchWord);
+	public boolean existCustomerId(CustomerDTO cus) {
+		return dao.existCustomerId(cus);
 	}
 
 	@Override

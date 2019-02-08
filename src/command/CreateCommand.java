@@ -39,6 +39,8 @@ public class CreateCommand extends Command {
 				cus.setSsn(request.getParameter("ssn"));
 				CustomerServiceImpl.getInstance().joinCustomer(cus);
 				break;
+			default:
+				break;
 			}
 		}
 }

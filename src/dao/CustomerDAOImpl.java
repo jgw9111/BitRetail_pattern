@@ -1,7 +1,9 @@
 package dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import domain.CustomerDTO;
@@ -35,51 +37,150 @@ public class CustomerDAOImpl implements CustomerDAO{
 			System.out.println((rs==1) ? "성공":"실패");
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public List<CustomerDTO> selectCustomersList() {
-		// TODO Auto-generated method stub
-		return null;
+		List<CustomerDTO> list = new ArrayList<>();
+			try {
+				String sql = "";
+				PreparedStatement pstmt = DatabasFactory
+											.createDatabase(Vendor.ORACLE)
+											.getConnection()
+											.prepareStatement(sql);
+				pstmt.setString(1,"");
+				ResultSet rs =pstmt.executeQuery();
+				while(rs.next()) {
+					list.add(null);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		return list;
 	}
 
 	@Override
 	public List<CustomerDTO> selectCustomers(String searchWord) {
-		// TODO Auto-generated method stub
-		return null;
+		List<CustomerDTO> list = new ArrayList<>();
+		try {
+			String sql = "";
+			PreparedStatement pstmt = DatabasFactory
+										.createDatabase(Vendor.ORACLE)
+										.getConnection()
+										.prepareStatement(sql);
+			pstmt.setString(1,"");
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override
-	public CustomerDTO selectCustomer(String searchWord) {
-		// TODO Auto-generated method stub
-		return null;
+	public CustomerDTO selectCustomer(CustomerDTO cus) {
+		CustomerDTO cust = null;
+		try {
+			PreparedStatement pstmt = DatabasFactory
+										.createDatabase(Vendor.ORACLE)
+										.getConnection()
+										.prepareStatement(CustomerSQL.SIGNIN.toString());
+			pstmt.setString(1, cus.getCustomerID());
+			pstmt.setString(2, cus.getPassword());
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				cust = new CustomerDTO();
+				cust.setAddress(rs.getString("ADDRESS"));
+				cust.setCity(rs.getString("CITY"));
+				cust.setCustomerID(rs.getString("CUSTOMER_ID"));
+				cust.setPassword(rs.getString("PASSWORD"));
+				cust.setPostalCode(rs.getString("POSTALCODE"));
+				cust.setSsn(rs.getString("SSN"));
+				cust.setCustomerName(rs.getString("CUSTOMER_NAME"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		return cust;
 	}
 
 	@Override
 	public int countCustomers() {
-		// TODO Auto-generated method stub
-		return 0;
+		int res = 0;
+		try {
+			String sql = "";
+			PreparedStatement pstmt = DatabasFactory
+										.createDatabase(Vendor.ORACLE)
+										.getConnection()
+										.prepareStatement(sql);
+			pstmt.setString(1, "");
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	@Override
-	public boolean existCustomer(String searchWord) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean existCustomerId(CustomerDTO cus) {
+		boolean ok = false;
+			try {
+				PreparedStatement pstmt = DatabasFactory
+											.createDatabase(Vendor.ORACLE)
+											.getConnection()
+											.prepareStatement(CustomerSQL.SIGNIN.toString());
+				pstmt.setString(1,cus.getCustomerID());
+				pstmt.setString(2,cus.getPassword());
+				ResultSet rs =pstmt.executeQuery();
+				if(rs.next()) {
+					ok=true;
+				}
+				System.out.println("접근 허용 :"+ok);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return ok;
 	}
 
 	@Override
 	public void updateCustomer(CustomerDTO cus) {
-		// TODO Auto-generated method stub
-		
+		try {
+			String sql = "";
+			PreparedStatement pstmt = DatabasFactory
+									.createDatabase(Vendor.ORACLE)
+									.getConnection()
+									.prepareStatement(sql);
+			pstmt.setString(1,"");
+			int rs = pstmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void deleteCustomer(CustomerDTO cus) {
-		// TODO Auto-generated method stub
-		
+		try {
+			String sql = "";
+			PreparedStatement pstmt = DatabasFactory
+										.createDatabase(Vendor.ORACLE)
+										.getConnection()
+										.prepareStatement(sql);
+			pstmt.setString(1,"");
+			int rs = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

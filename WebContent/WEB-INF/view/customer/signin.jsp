@@ -7,24 +7,32 @@
 </div>
 <div class="grid-item" id="content">
 <form id="form" name="form" >
-	<div class="grid-container">
-	    <div class="grid-item" id="item_1">I D</div>
-	    <div class="grid-item" id="item_2"><input type="text" id="customerID" name="customerID" ></div>
-	    <div class="grid-item" id="item_3">PASSWORD</div>
-	    <div class="grid-item" id="item_4"><input type="text" id="password" name="password" ></div>
-	    <div class="grid-item" id="item_11"><input type="submit" id="confirm_btn" value='확 인'></div>
-	    <div class="grid-item" id="item_12"><input type="reset" id="cancel_btn" value='취 소'> </div>
-	    <input type="hidden" name="cmd" value="access" />
-	    <input type="hidden" name="page" value="list" />
-	    <input type="hidden" name="dir" value="customer" />
+		<div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">I  D</span>
+		  <input type="text" class="form-control" placeholder="I  D" aria-describedby="basic-addon1" id="customerID" name="customerID">
+	    </div>
+		<div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">PASSWORD</span>
+		  <input type="text" class="form-control" placeholder="PASSWORD" aria-describedby="basic-addon1" id="password" name="password">
+	    </div>
+	
+	    <button type="button" class="btn btn-default btn-sm" id="confirm_btn" value='SIGN-UP'>
+ 	 		 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> CONFRIM
+	    </button>
+	    <button type="button" class="btn btn-default btn-sm" id="cancel_btn" value='CANCEL'>
+ 	  		 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> CANCEL
+	    </button>
+	    
+	    <input type="hidden" name="cmd" value="signin" />
+	    <input type="hidden" name="page" value="main" />
+	    <input type="hidden" name="dir" value="category" />
 	</div>
 </form>
-</div>
 <jsp:include page="../home/bottom.jsp"/>
 <script>
 $('#confirm_btn').click(function(){
-	var empno = $('#customerID').val();
-	var name = $('#password').val();
+	var customerID = $('#customerID').val();
+	var password = $('#password').val();
 	$('#form')
 	.attr('action', '${ctx}/customer.do')
 	.submit();

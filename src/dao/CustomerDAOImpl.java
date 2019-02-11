@@ -8,6 +8,7 @@ import java.util.List;
 
 import domain.CustomerDTO;
 import enums.CustomerSQL;
+import enums.EmployeeSQL;
 import enums.Vendor;
 import factory.DatabasFactory;
 
@@ -29,9 +30,10 @@ public class CustomerDAOImpl implements CustomerDAO{
 			pstmt.setString(2,cus.getCustomerName());
 			pstmt.setString(3,cus.getPassword());
 			pstmt.setString(4,cus.getSsn());
-			pstmt.setString(5,cus.getCity());
-			pstmt.setString(6,cus.getPostalCode());
+			pstmt.setString(5,cus.getPhone());
+			pstmt.setString(6,cus.getCity());
 			pstmt.setString(7,cus.getAddress());
+			pstmt.setString(8,cus.getPostalCode());
 			
 			int rs = pstmt.executeUpdate();
 			System.out.println((rs==1) ? "성공":"실패");
@@ -45,16 +47,29 @@ public class CustomerDAOImpl implements CustomerDAO{
 	public List<CustomerDTO> selectCustomersList() {
 		List<CustomerDTO> list = new ArrayList<>();
 			try {
-				String sql = "";
+				String sql = CustomerSQL.LIST.toString();
 				PreparedStatement pstmt = DatabasFactory
 											.createDatabase(Vendor.ORACLE)
 											.getConnection()
 											.prepareStatement(sql);
-				pstmt.setString(1,"");
 				ResultSet rs =pstmt.executeQuery();
+				CustomerDTO cust = null;
 				while(rs.next()) {
-					list.add(null);
+					cust = new CustomerDTO();
+				 	cust.setCustomerID(rs.getString("CUSTOMER_ID"));
+	                cust.setCustomerName(rs.getString("CUSTOMER_NAME"));
+	                cust.setSsn(rs.getString("SSN"));
+	                cust.setPhone(rs.getString("PHOEN_NUMBER"));
+	                cust.setCity(rs.getString("CITY"));
+	                cust.setAddress(rs.getString("ADDRESS"));
+	                cust.setPostalCode(rs.getString("POSTAL_CODE"));
+	                System.out.println("방금 담은 값 : "+cust.getCustomerName());
+					list.add(cust);
 				}
+				System.out.println("1번회원: "+list.get(0).getCustomerName());
+				System.out.println("2번회원: "+list.get(1).getCustomerName());
+				System.out.println("3번회원: "+list.get(2).getCustomerName());
+				System.out.println("4번회원: "+list.get(3).getCustomerName());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

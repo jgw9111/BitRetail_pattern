@@ -26,16 +26,20 @@
 		  <input type="text" class="form-control" placeholder="SSN" aria-describedby="basic-addon1" id="ssn" name="ssn">
 	  </div>
       <div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">PHONE</span>
+		  <input type="text" class="form-control" placeholder="PHONE" aria-describedby="basic-addon1" id="phone" name="phone">
+	  </div>
+      <div class="input-group">
 		  <span class="input-group-addon" id="basic-addon1">CITY</span>
 		  <input type="text" class="form-control" placeholder="CITY" aria-describedby="basic-addon1" id="city" name="city">
 	  </div>
       <div class="input-group">
-		  <span class="input-group-addon" id="basic-addon1">POSTALCODE</span>
-		  <input type="text" class="form-control" placeholder="POSTALCODE" aria-describedby="basic-addon1" id="postalCode" name="postalCode" >
-	  </div>
-      <div class="input-group">
 		  <span class="input-group-addon" id="basic-addon1">ADDRESS</span>
 		  <input type="text" class="form-control" placeholder="ADDRESS" aria-describedby="basic-addon1" id="address" name="address" >
+	  </div>
+      <div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">POSTALCODE</span>
+		  <input type="text" class="form-control" placeholder="POSTALCODE" aria-describedby="basic-addon1" id="postalCode" name="postalCode" >
 	  </div>
 	  <button type="button" class="btn btn-default btn-sm" id="confirm_btn" value='SIGN-UP'>
  	 	 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> CONFRIM
@@ -55,9 +59,10 @@ $('#confirm_btn').click(function(){
 	var customerName = $('#customerName').val();
 	var password = $('#password').val();
 	var ssn = $('#ssn').val();
+	var phone = $('#phone').val();
 	var city = $('#city').val();
-	var postalCode = $('#postalCode').val();
 	var address = $('#address').val();
+	var postalCode = $('#postalCode').val();
 	$('#form')
 	.attr('action', '${ctx}/customer.do')
 	.submit();

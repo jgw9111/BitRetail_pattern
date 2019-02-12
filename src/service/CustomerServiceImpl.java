@@ -5,6 +5,7 @@ import java.util.List;
 import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
 import domain.CustomerDTO;
+import proxy.Pagenation;
 
 public class CustomerServiceImpl implements CustomerService {
 	private static CustomerServiceImpl instance = new CustomerServiceImpl();
@@ -20,8 +21,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<CustomerDTO> bringCustomersList() {
-		return dao.selectCustomersList();
+	public List<CustomerDTO> bringCustomersList(Pagenation page) {
+		return dao.selectCustomersList(page);
 	}
 
 	@Override

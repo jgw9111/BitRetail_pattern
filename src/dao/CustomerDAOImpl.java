@@ -8,9 +8,9 @@ import java.util.List;
 
 import domain.CustomerDTO;
 import enums.CustomerSQL;
-import enums.EmployeeSQL;
 import enums.Vendor;
 import factory.DatabasFactory;
+import proxy.Pagenation;
 
 public class CustomerDAOImpl implements CustomerDAO{
 	private static CustomerDAOImpl instance = new CustomerDAOImpl();
@@ -44,7 +44,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 	}
 
 	@Override
-	public List<CustomerDTO> selectCustomersList() {
+	public List<CustomerDTO> selectCustomersList(Pagenation page) {
 		List<CustomerDTO> list = new ArrayList<>();
 			try {
 				String sql = CustomerSQL.LIST.toString();
@@ -52,10 +52,13 @@ public class CustomerDAOImpl implements CustomerDAO{
 											.createDatabase(Vendor.ORACLE)
 											.getConnection()
 											.prepareStatement(sql);
+				pstmt.setString(1,page.getStartRow());
+				pstmt.setString(2,page.getEndRow());
 				ResultSet rs =pstmt.executeQuery();
 				CustomerDTO cust = null;
 				while(rs.next()) {
 					cust = new CustomerDTO();
+					cust.setRnum(rs.getString("RNUM"));
 				 	cust.setCustomerID(rs.getString("CUSTOMER_ID"));
 	                cust.setCustomerName(rs.getString("CUSTOMER_NAME"));
 	                cust.setSsn(rs.getString("SSN"));
@@ -63,13 +66,8 @@ public class CustomerDAOImpl implements CustomerDAO{
 	                cust.setCity(rs.getString("CITY"));
 	                cust.setAddress(rs.getString("ADDRESS"));
 	                cust.setPostalCode(rs.getString("POSTAL_CODE"));
-	                System.out.println("방금 담은 값 : "+cust.getCustomerName());
 					list.add(cust);
 				}
-				System.out.println("1번회원: "+list.get(0).getCustomerName());
-				System.out.println("2번회원: "+list.get(1).getCustomerName());
-				System.out.println("3번회원: "+list.get(2).getCustomerName());
-				System.out.println("4번회원: "+list.get(3).getCustomerName());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -129,17 +127,15 @@ public class CustomerDAOImpl implements CustomerDAO{
 	public int countCustomers() {
 		int res = 0;
 		try {
-			String sql = "";
 			PreparedStatement pstmt = DatabasFactory
 										.createDatabase(Vendor.ORACLE)
 										.getConnection()
-										.prepareStatement(sql);
-			pstmt.setString(1, "");
+										.prepareStatement(CustomerSQL.COUNT.toString());
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
-				
+				res = rs.getInt("COUNT");
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return res;

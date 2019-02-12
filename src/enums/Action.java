@@ -2,7 +2,8 @@ package enums;
 
 public enum Action {
 	MOVE,REGISTER,ACCESS,
-	SIGNUP,SIGNIN
+	SIGNUP,SIGNIN,
+	CUST_LIST
 	;
 }
 

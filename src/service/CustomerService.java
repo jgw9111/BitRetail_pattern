@@ -3,14 +3,14 @@ package service;
 import java.util.List;
 
 import domain.CustomerDTO;
-import proxy.Pagenation;
+import proxy.Proxy;
 
 public interface CustomerService {
 	public void joinCustomer(CustomerDTO cus);
-	public List<CustomerDTO> bringCustomersList(Pagenation page);
-	public List<CustomerDTO> retrieveCustomers(String searchWord);
+	public List<CustomerDTO> bringCustomersList(Proxy pxy);
+	public List<CustomerDTO> retrieveCustomers(Proxy pxy);
 	public CustomerDTO retrieveCustomer(CustomerDTO cus);
-	public int countCustomers();
+	public int countCustomers(Proxy pxy);
 	public boolean existCustomerId(CustomerDTO cus);
 	public void modifyCustomer(CustomerDTO cus);
 	public void removeCustomer(CustomerDTO cus);

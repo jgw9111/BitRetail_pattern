@@ -1,20 +1,29 @@
 package command;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import domain.CustomerDTO;
 import enums.Action;
+import proxy.PageProxy;
 import proxy.Pagenation;
 import proxy.Proxy;
+import proxy.RequestProxy;
 import service.CustomerServiceImpl;
 
 public class ListCommand extends Command{
 	//sysout cmd=list&page=list&page_num=2&page_size=5
-	public ListCommand(HttpServletRequest request, HttpServletResponse response) {
-		super(request,response);
+	public ListCommand(Map<String,Proxy> pxy) {
+		super(pxy);
+		RequestProxy req = (RequestProxy) pxy.get("req");
+		HttpServletRequest request = req.getRequest();
+		PageProxy pagePxy = new PageProxy();
+		Pagenation page = new Pagenation();
+		pagePxy.carryOut(pxy);
+		page.carryOut(pxy);
+		
 		System.out.println("===list커맨드 진입===");
 		switch (Action.valueOf(request.getParameter("cmd").toUpperCase())) {
 		case CUST_LIST:
@@ -25,7 +34,7 @@ public class ListCommand extends Command{
 
 			List<CustomerDTO> list = CustomerServiceImpl
 								.getInstance()
-								.bringCustomersList(new Proxy().getPage());
+								.bringCustomersList(new PageProxy().getPage());
 			request.setAttribute("list",list);
 			
 			break;

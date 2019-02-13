@@ -6,6 +6,7 @@ import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
 import domain.CustomerDTO;
 import proxy.Pagenation;
+import proxy.Proxy;
 
 public class CustomerServiceImpl implements CustomerService {
 	private static CustomerServiceImpl instance = new CustomerServiceImpl();
@@ -21,13 +22,13 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<CustomerDTO> bringCustomersList(Pagenation page) {
-		return dao.selectCustomersList(page);
+	public List<CustomerDTO> bringCustomersList(Proxy pxy) {
+		return dao.selectCustomersList(pxy);
 	}
 
 	@Override
-	public List<CustomerDTO> retrieveCustomers(String searchWord) {
-		return dao.selectCustomers(searchWord);
+	public List<CustomerDTO> retrieveCustomers(Proxy pxy) {
+		return dao.selectCustomers(pxy);
 	}
 
 	@Override
@@ -36,8 +37,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public int countCustomers() {
-		return dao.countCustomers();
+	public int countCustomers(Proxy pxy) {
+		return dao.countCustomers(pxy);
 	}
 
 	@Override

@@ -3,35 +3,45 @@ package proxy;
 
 import javax.servlet.http.HttpServletRequest;
 
-import command.Receiver;
 import lombok.Data;
 import service.CustomerServiceImpl;
 
 @Data
-public class Pagenation implements Capable{
-	private String pageNum, count, pageSize, blockSize,
+public class Pagenation implements Proxy{
+	private int pageNum, count, pageSize, blockSize,
 				   startRow,endRow, startPage, endPage,
-				   prevBlock,nextBlock;
-	private int totalCount;
+				   prevBlock,nextBlock, rowCount;
 	private boolean existPrev,existNext;
 	
 	@Override
-	public void carryOut() {
-		System.out.println("==페이지네이션==");
-		HttpServletRequest req = Receiver.cmd.getRequest();
-		String pageNum = req.getParameter("page_num");
-		this.pageNum = (pageNum==null)? "1" :pageNum; 
-		String pageSize = req.getParameter("page_size");
-		this.pageSize = (pageSize==null)? "5" : pageSize ;
-		this.totalCount = CustomerServiceImpl.getInstance().countCustomers();
-		this.startRow = (totalCount - Integer.parseInt(this.pageSize))+"";
-		this.endRow = (Integer.parseInt(this.startRow) -4) +"" ;
+	public void carryOut(Object o) {
+		System.out.println("==페이지네이션 CarryOut==");
+		HttpServletRequest request = (HttpServletRequest)o;
+		String _pageNum = request.getParameter("page_num");
+		pageNum = (_pageNum==null)? 1 : Integer.parseInt(_pageNum); 
+		String _pageSize = request.getParameter("page_size");
+		pageSize = (_pageSize==null)? 5 : Integer.parseInt(_pageSize);
+		String _blockSize = request.getParameter("block_size");
+		blockSize = (_blockSize==null)? 5 : Integer.parseInt(_blockSize);
 		
+		rowCount = CustomerServiceImpl.getInstance().countCustomers(null);
+		System.out.println("전체 카운트 :: "+rowCount);
+
+		startRow = (pageNum -1)*pageSize +1;
+		endRow = (rowCount > endRow)? pageNum * pageSize : rowCount;
 		
-		System.out.println("TotalCount ::"+this.totalCount);
-		System.out.println("startRow ::"+startRow);
-		System.out.println("endRow ::"+endRow);
-		System.out.println("pageNum ::"+this.pageNum);
-		System.out.println("pageSize ::"+this.pageSize);
+		/*if(rowCount % pageSize != 0) {
+			endRow = rowCount - (pageSize * pageNum) + pageSize;
+			startRow = endRow - (pageSize -1) ;
+		}else {
+			endRow = rowCount - (pageSize * pageNum) + pageSize;
+			startRow = endRow - (pageSize -1);
+		}*/
+		
+		System.out.println("==EndRow ::"+endRow);
+		System.out.println("==StartRow ::"+startRow);
+		System.out.println("BlockSize ::"+blockSize);
+		System.out.println("PageNum ::"+pageNum);
+		System.out.println("PageSize ::"+pageSize);
 	}
 }

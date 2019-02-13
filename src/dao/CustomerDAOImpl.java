@@ -10,7 +10,9 @@ import domain.CustomerDTO;
 import enums.CustomerSQL;
 import enums.Vendor;
 import factory.DatabasFactory;
+import proxy.PageProxy;
 import proxy.Pagenation;
+import proxy.Proxy;
 
 public class CustomerDAOImpl implements CustomerDAO{
 	private static CustomerDAOImpl instance = new CustomerDAOImpl();
@@ -44,16 +46,22 @@ public class CustomerDAOImpl implements CustomerDAO{
 	}
 
 	@Override
-	public List<CustomerDTO> selectCustomersList(Pagenation page) {
+	public List<CustomerDTO> selectCustomersList(Proxy pxy) {
 		List<CustomerDTO> list = new ArrayList<>();
 			try {
+				System.out.println("실행할 쿼리::"+CustomerSQL.LIST.toString());
 				String sql = CustomerSQL.LIST.toString();
+				Pagenation page = ((PageProxy)pxy).getPage();
 				PreparedStatement pstmt = DatabasFactory
 											.createDatabase(Vendor.ORACLE)
 											.getConnection()
 											.prepareStatement(sql);
-				pstmt.setString(1,page.getStartRow());
-				pstmt.setString(2,page.getEndRow());
+				String startRow = String.valueOf(page.getStartRow());
+				String endRow = String.valueOf(page.getEndRow());
+				pstmt.setString(1, startRow);
+				pstmt.setString(2, endRow);
+				System.out.println("DAO 스타트로우:" + startRow);
+				System.out.println("DAO 엔드로우:" + endRow);
 				ResultSet rs =pstmt.executeQuery();
 				CustomerDTO cust = null;
 				while(rs.next()) {
@@ -75,7 +83,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 	}
 
 	@Override
-	public List<CustomerDTO> selectCustomers(String searchWord) {
+	public List<CustomerDTO> selectCustomers(Proxy pxy) {
 		List<CustomerDTO> list = new ArrayList<>();
 		try {
 			String sql = "";
@@ -124,16 +132,16 @@ public class CustomerDAOImpl implements CustomerDAO{
 	}
 
 	@Override
-	public int countCustomers() {
+	public int countCustomers(Proxy pxy) {
 		int res = 0;
 		try {
 			PreparedStatement pstmt = DatabasFactory
 										.createDatabase(Vendor.ORACLE)
 										.getConnection()
-										.prepareStatement(CustomerSQL.COUNT.toString());
+										.prepareStatement(CustomerSQL.ROW_COUNT.toString());
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				res = rs.getInt("COUNT");
+			if(rs.next()) {
+				res = rs.getInt("COUNT"); 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

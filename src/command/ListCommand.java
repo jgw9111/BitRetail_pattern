@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import domain.CustomerDTO;
 import enums.Action;
 import proxy.PageProxy;
-import proxy.Pagenation;
+import proxy.Pagination;
 import proxy.Proxy;
 import proxy.RequestProxy;
 import service.CustomerServiceImpl;
@@ -19,10 +19,10 @@ public class ListCommand extends Command{
 		super(pxy);
 		RequestProxy req = (RequestProxy) pxy.get("req");
 		HttpServletRequest request = req.getRequest();
-		PageProxy pagePxy = new PageProxy();
-		Pagenation page = new Pagenation();
-		pagePxy.carryOut(pxy);
-		page.carryOut(pxy);
+		Proxy paging = new Pagination();
+		paging.carryOut(request);
+		Proxy pagePxy = new PageProxy();
+		pagePxy.carryOut(paging);
 		
 		System.out.println("===list커맨드 진입===");
 		switch (Action.valueOf(request.getParameter("cmd").toUpperCase())) {
@@ -34,9 +34,14 @@ public class ListCommand extends Command{
 
 			List<CustomerDTO> list = CustomerServiceImpl
 								.getInstance()
-								.bringCustomersList(new PageProxy().getPage());
+								.bringCustomersList(pagePxy);
 			request.setAttribute("list",list);
+			request.setAttribute("pagenation", paging);
 			
+			break;
+		case CUST_PHONE:
+			Map<String,Object> map = CustomerServiceImpl.getInstance().retreivePhone(null);
+			request.setAttribute("map",map);
 			break;
 		default:
 			break;

@@ -26,7 +26,7 @@ public class Commander {
 		case ACCESS: case SIGNIN:
 			cmd = new ExistCommand(pxy);
 			break;
-		case CUST_LIST:
+		case CUST_LIST: case CUST_PHONE:
 			cmd = new ListCommand(pxy);
 			break;
 		default:

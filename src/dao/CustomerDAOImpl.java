@@ -4,14 +4,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import domain.CustomerDTO;
 import enums.CustomerSQL;
 import enums.Vendor;
 import factory.DatabasFactory;
 import proxy.PageProxy;
-import proxy.Pagenation;
+import proxy.Pagination;
 import proxy.Proxy;
 
 public class CustomerDAOImpl implements CustomerDAO{
@@ -49,9 +51,9 @@ public class CustomerDAOImpl implements CustomerDAO{
 	public List<CustomerDTO> selectCustomersList(Proxy pxy) {
 		List<CustomerDTO> list = new ArrayList<>();
 			try {
-				System.out.println("실행할 쿼리::"+CustomerSQL.LIST.toString());
+				/*System.out.println("실행할 쿼리::"+CustomerSQL.LIST.toString());*/
 				String sql = CustomerSQL.LIST.toString();
-				Pagenation page = ((PageProxy)pxy).getPage();
+				Pagination page = ((PageProxy)pxy).getPage();
 				PreparedStatement pstmt = DatabasFactory
 											.createDatabase(Vendor.ORACLE)
 											.getConnection()
@@ -200,6 +202,30 @@ public class CustomerDAOImpl implements CustomerDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	@Override
+	public Map<String, Object> selectPhone(Proxy pxy) {
+		Map<String,Object> map = new HashMap<String, Object>();
+		try {
+			PreparedStatement ps = DatabasFactory
+								.createDatabase(Vendor.ORACLE)
+								.getConnection()
+								.prepareStatement(CustomerSQL.CUST_PHONE.toString());
+			ResultSet rs = ps.executeQuery();
+			CustomerDTO cust =null;
+			while(rs.next()) {
+				cust = new CustomerDTO(); // deep copy
+				String entry = rs.getString("CUSTOMER_ID");
+				cust.setCustomerID(rs.getString("CUSTOMER_ID"));
+				cust.setCustomerName(rs.getString("CUSTOMER_NAME"));
+				cust.setPhone(rs.getString("PHOEN_NUMBER"));
+				map.put(entry, cust); // pk 값 entry 로 치환
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return map;
 	}
 
 }

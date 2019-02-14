@@ -28,10 +28,10 @@
 .center {
   text-align: center;
 }
-.pagination {
+.pagenation {
   display: inline-block;
 }
-.pagination a {
+.pagenation a {
   color: black;
   float: left;
   padding: 8px 16px;
@@ -40,11 +40,11 @@
   border: 1px solid #ddd;
   margin: 0 4px;
 }
-.pagination a.active {
+.pagenation a.active {
   background-color: #4CAF50;
   color: white;
   border: 1px solid #4CAF50;
 }
-.pagination a:hover:not(.active) {
+.pagenation a:hover:not(.active) {
     background-color: #ddd;
 }

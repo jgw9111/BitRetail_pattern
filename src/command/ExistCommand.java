@@ -10,7 +10,7 @@ import domain.CustomerDTO;
 import domain.EmployeeDTO;
 import enums.Action;
 import proxy.PageProxy;
-import proxy.Pagenation;
+import proxy.Pagination;
 import proxy.Proxy;
 import proxy.RequestProxy;
 import service.CustomerServiceImpl;
@@ -33,7 +33,7 @@ public class ExistCommand extends Command{
 			EmployeeServiceImpl.getInstance().exsitEmployee(emp);
 			if(exist) {
 				System.out.println("사원 접근 허용 ::"+exist);
-				Proxy paging = new Pagenation();
+				Proxy paging = new Pagination();
 				paging.carryOut(request);
 				Proxy pagePxy = new PageProxy();
 				pagePxy.carryOut(paging);
@@ -42,7 +42,7 @@ public class ExistCommand extends Command{
 						.getInstance()
 						.bringCustomersList(pagePxy);
 				request.setAttribute("list",list);
-				System.out.println("총 고객수::"+list.size());
+				request.setAttribute("pagenation", paging);
 			}else {
 				System.out.println("접근 불가");
 				super.setDomain("home");

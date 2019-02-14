@@ -1,9 +1,10 @@
 package dao;
 
 import java.util.List;
+import java.util.Map;
 
 import domain.CustomerDTO;
-import proxy.Pagenation;
+import proxy.Pagination;
 import proxy.Proxy;
 
 public interface CustomerDAO {
@@ -15,4 +16,5 @@ public interface CustomerDAO {
 	public boolean existCustomerId(CustomerDTO cus);
 	public void updateCustomer(CustomerDTO cus);
 	public void deleteCustomer(CustomerDTO cus);
+	public Map<String, Object> selectPhone(Proxy pxy);
 }

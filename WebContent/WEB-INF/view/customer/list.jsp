@@ -37,24 +37,27 @@
 	    <td>${cust.postalCode}</td>
 	  </tr>
 	</c:forEach>
-	
 	</table>
-	<div style="height: 50px"></div>    
+<div style="height: 50px"></div>    
 	<div class="center">
-	  <div class="pagination">
-	  <a href="#">&laquo;</a>
-	  <c:forEach begin="1" end="5" varStatus="status">
-		  <a href="#" id="page_${status.count}"> ${status.count}</a>
+	  <div class="pagenation">
+	  <c:if test="${pagenation.existPrev}">
+		  <a href="${ctx}/customer.do?cmd=cust_list&page=list&page_num=${pagenation.prevBlock}">&laquo;</a>
+	  </c:if>
+	  <c:forEach begin="${pagenation.startPage}" end="${pagenation.endPage}" varStatus="status" >
+		  <a href="#" class ="page">${status.index}</a>
 	  </c:forEach>
-	  <a href="#">&raquo;</a>
+	  <c:if test="${pagenation.existNext}">
+		  <a href="${ctx}/customer.do?cmd=cust_list&page=list&page_num=${pagenation.nextBlock}">&raquo;</a>
+	  </c:if>
 	  </div>
 	</div>
 </div>
+
 <jsp:include page="../home/bottom.jsp"/>
 <script>
-
-	$('#page_${status.count}').click(function(){
-		location.assign('${ctx}/customer.do?cmd=cust_list&page=list&page_num=2')
+	$('.page').click(function(){
+		location.assign('${ctx}/customer.do?cmd=cust_list&page=list&page_num='+$(this).text());
 		});
 		// pageNum, pageSize, c
 		// ?cmd=list&page=list&page_num=2&page_size=5

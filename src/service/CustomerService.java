@@ -16,4 +16,5 @@ public interface CustomerService {
 	public void modifyCustomer(CustomerDTO cus);
 	public void removeCustomer(CustomerDTO cus);
 	public Map<String,Object> retreivePhone(Proxy pxy);
+	public CustomerDTO retreiveCustomerOne(CustomerDTO cus);
 }

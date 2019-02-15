@@ -28,7 +28,7 @@
 	  <tr>
 	    <td>${cust.rnum}</td>
 	    <td>${cust.customerID}</td>
-	    <td>${cust.customerName}</td>
+	    <td><a href="${ctx}/customer.do?cmd=cust_retrieve&page=detail&customerID=${cust.customerID}">${cust.customerName}</a></td>
 	    <td>${cust.ssn}</td>
 	    <td>여</td>
 	    <td>${cust.phone}</td>
@@ -45,7 +45,14 @@
 		  <a href="${ctx}/customer.do?cmd=cust_list&page=list&page_num=${pagenation.prevBlock}">&laquo;</a>
 	  </c:if>
 	  <c:forEach begin="${pagenation.startPage}" end="${pagenation.endPage}" varStatus="status" >
-		  <a href="#" class ="page">${status.index}</a>
+		  <c:choose>
+		  	<c:when test="${pagenation.pageNum eq status.index}">
+			  <a href="#" class ="page active">${status.index}</a>
+		  	</c:when>
+            <c:otherwise>
+			  <a href="#" class ="page">${status.index}</a>
+            </c:otherwise>
+		  </c:choose>
 	  </c:forEach>
 	  <c:if test="${pagenation.existNext}">
 		  <a href="${ctx}/customer.do?cmd=cust_list&page=list&page_num=${pagenation.nextBlock}">&raquo;</a>

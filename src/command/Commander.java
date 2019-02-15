@@ -29,6 +29,9 @@ public class Commander {
 		case CUST_LIST: case CUST_PHONE:
 			cmd = new ListCommand(pxy);
 			break;
+		case CUST_RETRIEVE:
+			cmd = new RetrieveCommand(pxy);
+			break;
 		default:
 			break;
 		}

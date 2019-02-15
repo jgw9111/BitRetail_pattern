@@ -60,5 +60,9 @@ public class CustomerServiceImpl implements CustomerService {
 	public Map<String, Object> retreivePhone(Proxy pxy) {
 		return dao.selectPhone(pxy);
 	}
+	@Override
+	public CustomerDTO retreiveCustomerOne(CustomerDTO cus) {
+		return dao.selectCustomerOne(cus);
+	}
 
 }

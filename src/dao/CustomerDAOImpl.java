@@ -88,11 +88,10 @@ public class CustomerDAOImpl implements CustomerDAO{
 	public List<CustomerDTO> selectCustomers(Proxy pxy) {
 		List<CustomerDTO> list = new ArrayList<>();
 		try {
-			String sql = "";
 			PreparedStatement pstmt = DatabasFactory
 										.createDatabase(Vendor.ORACLE)
 										.getConnection()
-										.prepareStatement(sql);
+										.prepareStatement(CustomerSQL.CUST_RETRIEVE.toString());
 			pstmt.setString(1,"");
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -108,6 +107,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 	public CustomerDTO selectCustomer(CustomerDTO cus) {
 		CustomerDTO cust = null;
 		try {
+			
 			PreparedStatement pstmt = DatabasFactory
 										.createDatabase(Vendor.ORACLE)
 										.getConnection()
@@ -226,6 +226,32 @@ public class CustomerDAOImpl implements CustomerDAO{
 			e.printStackTrace();
 		}
 		return map;
+	}
+	@Override
+	public CustomerDTO selectCustomerOne(CustomerDTO cus) {
+		CustomerDTO cust = new CustomerDTO();
+		try {
+			
+			PreparedStatement pstmt = DatabasFactory
+										.createDatabase(Vendor.ORACLE)
+										.getConnection()
+										.prepareStatement(CustomerSQL.CUST_RETRIEVE.toString());
+			pstmt.setString(1, cus.getCustomerID());
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				cust.setAddress(rs.getString("ADDRESS"));
+				cust.setCity(rs.getString("CITY"));
+				cust.setCustomerID(rs.getString("CUSTOMER_ID"));
+				cust.setPostalCode(rs.getString("POSTAL_CODE"));
+				cust.setSsn(rs.getString("SSN"));
+				cust.setCustomerName(rs.getString("CUSTOMER_NAME"));
+				cust.setPhone(rs.getString("PHOEN_NUMBER"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		return cust;
 	}
 
 }

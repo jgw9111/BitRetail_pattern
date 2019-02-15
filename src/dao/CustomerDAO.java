@@ -17,4 +17,5 @@ public interface CustomerDAO {
 	public void updateCustomer(CustomerDTO cus);
 	public void deleteCustomer(CustomerDTO cus);
 	public Map<String, Object> selectPhone(Proxy pxy);
+	public CustomerDTO selectCustomerOne(CustomerDTO cus);
 }

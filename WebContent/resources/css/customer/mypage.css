@@ -1,11 +1,11 @@
 @charset "UTF-8";
-#navi_bar {
+/* #navi_bar {
     grid-column-start: 1;
     grid-column-end: 7;
     padding-top: 20px;
     padding-bottom: 20px;
     font-family: 'Jua', sans-serif;
-}
+} */
 .mypage{
     display: grid;
     grid-template-columns: auto auto auto auto;

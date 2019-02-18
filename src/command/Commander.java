@@ -32,6 +32,9 @@ public class Commander {
 		case CUST_RETRIEVE:
 			cmd = new RetrieveCommand(pxy);
 			break;
+		case CUST_UPDATE:
+			cmd = new UpdateCommand(pxy);
+			break;
 		default:
 			break;
 		}

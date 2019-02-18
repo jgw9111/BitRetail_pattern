@@ -176,13 +176,18 @@ public class CustomerDAOImpl implements CustomerDAO{
 	@Override
 	public void updateCustomer(CustomerDTO cus) {
 		try {
-			String sql = "";
 			PreparedStatement pstmt = DatabasFactory
 									.createDatabase(Vendor.ORACLE)
 									.getConnection()
-									.prepareStatement(sql);
-			pstmt.setString(1,"");
+									.prepareStatement(CustomerSQL.CUST_UPDATE.toString());
+			pstmt.setString(1,cus.getPhone());
+			pstmt.setString(2,cus.getCity());
+			pstmt.setString(3,cus.getAddress());
+			pstmt.setString(4,cus.getPostalCode());
+			pstmt.setString(5,cus.getPassword());
+			pstmt.setString(6,cus.getCustomerID());
 			int rs = pstmt.executeUpdate();
+			System.out.println("되는거야 마는거야");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -246,6 +251,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 				cust.setSsn(rs.getString("SSN"));
 				cust.setCustomerName(rs.getString("CUSTOMER_NAME"));
 				cust.setPhone(rs.getString("PHOEN_NUMBER"));
+				cust.setPassword(rs.getString("PASSWORD"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

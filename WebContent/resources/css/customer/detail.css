@@ -1,0 +1,23 @@
+@charset "UTF-8";
+#nav {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    padding: 0;
+}
+#side_bar{
+	grid-column-start:1;
+	grid-column-end:3;
+}
+#mypage{
+	grid-column-start:3;
+	grid-column-end:5;
+	padding: 20px;
+}
+#mypage1{
+	grid-column-start:1;
+	grid-column-end:2;
+}
+#mypage2{
+	grid-column-start:2;
+	grid-column-end:5;
+}

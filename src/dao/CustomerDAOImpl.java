@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import domain.CustomerDTO;
+import domain.ImageDTO;
 import enums.CustomerSQL;
 import enums.Vendor;
 import factory.DatabasFactory;
@@ -18,7 +20,10 @@ import proxy.Proxy;
 
 public class CustomerDAOImpl implements CustomerDAO{
 	private static CustomerDAOImpl instance = new CustomerDAOImpl();
-	private CustomerDAOImpl() {};
+	Connection conn;
+	private CustomerDAOImpl() {
+		conn = DatabasFactory.createDatabase(Vendor.ORACLE).getConnection();
+	}
 	public static CustomerDAOImpl getInstance() {return instance;}
 
 	@Override
@@ -258,6 +263,22 @@ public class CustomerDAOImpl implements CustomerDAO{
 		}
 	
 		return cust;
+	}
+	@Override
+	public CustomerDTO selectProfile(Proxy pxy) {
+		try {
+			
+			ImageDAOImpl.getInstance().selectImage(img);;
+			String imgSeq = ImageDAOImpl.getInstance().lastImageSeq();
+			String sql = "UPDATE CUSTOMERS SET PHOTO = ? WHERE CUSTOMER_ID LIKE ? ";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1,imgSeq);
+			ps.setString(2,"CUST_ID");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }

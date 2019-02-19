@@ -64,5 +64,9 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustomerDTO retreiveCustomerOne(CustomerDTO cus) {
 		return dao.selectCustomerOne(cus);
 	}
+	@Override
+	public void fileUpload(Proxy pxy) {
+		dao.updateImage(pxy);
+	}
 
 }

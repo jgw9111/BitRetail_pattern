@@ -29,13 +29,17 @@ public class FileCommand extends Command {
 			System.out.println("->>>파일커맨드 cust_file_upload");
 			ImageProxy ipxy = new ImageProxy();
 			ipxy.carryOut(request);
-			ImageDTO image = ipxy.getImg();
-			String customerID = ipxy.getImg().getOwner();
-			CustomerDTO cust = new CustomerDTO();
-			cust.setCustomerID(customerID);
-			cust = CustomerServiceImpl.getInstance().retreiveCustomerOne(cust);
-			request.setAttribute("image",image);
-			request.setAttribute("cust",cust);
+			Map<String,Object> map = CustomerServiceImpl
+									.getInstance()
+									.fileUpload(ipxy);
+			// 1. 업로드한 이미지 insert 해야함
+			// 2. customer 안 photo에 대표이미지(프로필사진)을 인서트한 이미지로 바꿔야한다
+			// 		(단, default_photo.jpg 로 되어있는 것을 이미지의 seq 값으로 바꾼다.)
+			// 3. 이후 고객의 정보 / 이미지에서 seq에 따른 이미지 정보 두개를 가져온다
+			//
+			System.out.println("--------------"+ipxy);
+			request.setAttribute("image",map.get("img"));
+			request.setAttribute("cust",map.get("cust"));
 			break;
 		default:
 			break;

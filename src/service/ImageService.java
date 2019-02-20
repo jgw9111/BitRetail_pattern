@@ -12,6 +12,7 @@ public interface ImageService {
 	public ImageDTO searchImage(ImageDTO img);
 	public int countImage(Proxy pxy);
 	public void updateImage(ImageDTO img);
+	public String lastImageSeq();
 	public void removeImage(ImageDTO img);
 	
 }

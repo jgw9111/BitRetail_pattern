@@ -12,8 +12,10 @@ import java.util.Map;
 import domain.CustomerDTO;
 import domain.ImageDTO;
 import enums.CustomerSQL;
+import enums.ImageSQL;
 import enums.Vendor;
 import factory.DatabasFactory;
+import proxy.ImageProxy;
 import proxy.PageProxy;
 import proxy.Pagination;
 import proxy.Proxy;
@@ -192,7 +194,6 @@ public class CustomerDAOImpl implements CustomerDAO{
 			pstmt.setString(5,cus.getPassword());
 			pstmt.setString(6,cus.getCustomerID());
 			int rs = pstmt.executeUpdate();
-			System.out.println("되는거야 마는거야");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -265,19 +266,44 @@ public class CustomerDAOImpl implements CustomerDAO{
 		return cust;
 	}
 	@Override
-	public CustomerDTO selectProfile(Proxy pxy) {
+	public Map<String, Object> selectProfile(Proxy pxy) {
+		Map<String, Object> map = new HashMap<>();
+		CustomerDTO cust = new CustomerDTO();
+		ImageDTO img = new ImageDTO();
 		try {
-			
-			ImageDAOImpl.getInstance().selectImage(img);;
-			String imgSeq = ImageDAOImpl.getInstance().lastImageSeq();
-			String sql = "UPDATE CUSTOMERS SET PHOTO = ? WHERE CUSTOMER_ID LIKE ? ";
+			String sql = "";
+			ImageProxy ipxy = (ImageProxy) pxy;
+			System.out.println("DAO 넘어온 파일명: "+ipxy.getImg().getImgName());
+			System.out.println("DAO 넘어온 확장자: "+ipxy.getImg().getImgExtention());
+			System.out.println("DAO 넘어온 오너: "+ipxy.getImg().getOwner());
+			ImageDAOImpl
+					.getInstance()
+					.insertImage(ipxy.getImg());
+						
+			String imgSeq = ImageDAOImpl
+						.getInstance()
+						.lastImageSeq();
+			System.out.println("------>imgseq"+imgSeq);
+			String customerID = ipxy.getImg().getOwner();
+			System.out.println("오너 아이디: "+customerID);
+			sql = "UPDATE CUSTOMERS SET PHOTO = ? WHERE CUSTOMER_ID LIKE ? ";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1,imgSeq);
-			ps.setString(2,"CUST_ID");
+			ps.setString(2,customerID);
+			ps.executeUpdate();
+			img.setImgSeq(imgSeq);
+			img = ImageDAOImpl.getInstance().selectImage(img);
+			cust.setCustomerID(customerID);
+			cust = selectCustomerOne(cust);
+			System.out.println("회원 정보::"+cust.toString());
+			System.out.println("이미지 정보::"+img.toString());
+			map.put("cust",cust);
+			map.put("img",img);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return map;
 		
 	}
 

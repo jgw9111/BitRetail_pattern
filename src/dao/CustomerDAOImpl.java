@@ -128,7 +128,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 				cust.setCity(rs.getString("CITY"));
 				cust.setCustomerID(rs.getString("CUSTOMER_ID"));
 				cust.setPassword(rs.getString("PASSWORD"));
-				cust.setPostalCode(rs.getString("POSTALCODE"));
+				cust.setPostalCode(rs.getString("POSTAL_CODE"));
 				cust.setSsn(rs.getString("SSN"));
 				cust.setCustomerName(rs.getString("CUSTOMER_NAME"));
 			}
@@ -203,12 +203,11 @@ public class CustomerDAOImpl implements CustomerDAO{
 	@Override
 	public void deleteCustomer(CustomerDTO cus) {
 		try {
-			String sql = "";
 			PreparedStatement pstmt = DatabasFactory
 										.createDatabase(Vendor.ORACLE)
 										.getConnection()
-										.prepareStatement(sql);
-			pstmt.setString(1,"");
+										.prepareStatement(CustomerSQL.CUST_DELETE.toString());
+			pstmt.setString(1,cus.getCustomerID());
 			int rs = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

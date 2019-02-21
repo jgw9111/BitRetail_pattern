@@ -18,21 +18,7 @@ public class EmployeeController extends HttpServlet {
 	protected void service(HttpServletRequest request, 
 			HttpServletResponse response) throws ServletException, IOException {
 		Receiver.init(request, response); // view 세팅
-		/*String action = Receiver.cmd.getAction();*/
-		/*switch (Action.valueOf(Receiver
-				.cmd
-				.getAction()
-				.toUpperCase())) {
-		case MOVE:
-			System.out.println("==무브진입==");
-			Carrier.forward(request, response);
-			break;
-		case REGISTER:
-			Carrier.forward(request, response);
-			break;
-		case ACCESS: 
-			
-			break;*/
+		System.out.println("->임플로이쩜두");
 		Carrier.forward(request, response);
 	}
 }

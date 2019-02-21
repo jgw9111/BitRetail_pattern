@@ -43,6 +43,9 @@ public class ListCommand extends Command{
 			Map<String,Object> map = CustomerServiceImpl.getInstance().retreivePhone(null);
 			request.setAttribute("map",map);
 			break;
+		case PRODUCT_LIST :
+			
+			break;
 		default:
 			break;
 		}

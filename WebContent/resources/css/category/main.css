@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+
 #left {
     grid-column-start: 1;
     grid-column-end: 3;

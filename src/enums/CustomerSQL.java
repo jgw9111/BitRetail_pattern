@@ -1,15 +1,15 @@
 package enums;
 
 public enum CustomerSQL {
-	SIGNUP,SIGNIN,LIST,ROW_COUNT,CUST_PHONE,CUST_RETRIEVE,CUST_UPDATE;
+	SIGNUP,SIGNIN,LIST,ROW_COUNT,CUST_PHONE,CUST_RETRIEVE,CUST_UPDATE,CUST_DELETE;
 	
 	@Override
 	public String toString() {
 		StringBuffer query = new StringBuffer();
 		switch(this) {
 		case SIGNUP : 
-			query.append("INSERT INTO CUSTOMERS(CUSTOMER_ID,CUSTOMER_NAME,PASSWORD,SSN,PHOEN_NUMBER,CITY,ADDRESS,POSTAL_CODE)\n" + 
-					"VALUES(?,?,?,?,?,?,?,?)");
+			query.append("INSERT INTO CUSTOMERS(CUSTOMER_ID,CUSTOMER_NAME,PASSWORD,SSN,PHOEN_NUMBER,CITY,ADDRESS,POSTAL_CODE,PHOTO)\n" + 
+					"VALUES(?,?,?,?,?,?,?,?,'1040')");
 			break;
 		case SIGNIN :
 			query.append("SELECT * FROM CUSTOMERS " + 
@@ -42,6 +42,9 @@ public enum CustomerSQL {
 					"    POSTAL_CODE = ?,\n" + 
 					"    PASSWORD = ? \n" + 
 					"WHERE CUSTOMER_ID LIKE ?");
+			break;
+		case CUST_DELETE:
+			query.append("DELETE FROM CUSTOMERS WHERE CUSTOMER_ID LIKE ?");
 			break;
 		}
 		

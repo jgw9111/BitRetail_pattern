@@ -21,38 +21,71 @@
 	</div>
 </div>
 <div class="grid-item" id= "content">
-<div class="grid-item" id ="mypage">
+<div id="mypage_table">
+  <h2>검색한 사람의 정보</h2>  
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+             <td>I   D</td>
+             <td>${cust.customerID}</td>
+           </tr>
+           <tr>
+             <td>이  름 </td>
+             <td>${cust.customerName}</td>
+           </tr>
+           <tr>
+             <td>생년월일 </td>
+             <td>${cust.ssn}</td>
+           </tr>
+           <tr>
+             <td>성  별</td>
+             <td>여</td>
+           </tr>
+           <tr>
+             <td>전화번호</td>
+             <td>${cust.phone}</td>
+           </tr>
+           <tr>
+             <td>지번주소</td>
+             <td>${cust.city}</td>
+           </tr>
+           <tr>
+             <td>상세주소</td>
+             <td>${cust.address}</td>
+           </tr>
+           <tr>
+             <td>우편번호</td>
+             <td>${cust.postalCode}</td>
+           </tr>     
+    </thead>	
+  </table>
+</div>
+
+<%-- <div class="grid-item" id ="mypage">
 	<div class="grid-item" id ="mypage1">
 		검색한 사람의 정보 <br />
-		I   D <br />
-		이	름 <br />
-		생년월일 <br />
-		성	별 <br />
-		전화번호 <br />
-		지번주소 <br />
-		상세주소  <br />
-		우편번호  <br />
-	</div>
-	<div class="grid-item" id ="mypage2">	
-		<br />			   
-		${cust.customerID} <br />
-		${cust.customerName} <br />
-		${cust.ssn} <br />
-		여 <br />
-		${cust.phone} <br />
-		${cust.city} <br />
-		${cust.address} <br />
-		${cust.postalCode} <br />
-		</div>
-</div>
+		I   D : ${cust.customerID} <br />
+		이	름 : ${cust.customerName}<br />
+		생년월일 : ${cust.ssn}<br />
+		성	별 : 여 <br />
+		전화번호 : ${cust.phone}<br />
+		지번주소 : ${cust.city}<br />
+		상세주소 : ${cust.address}<br />
+		우편번호 : ${cust.postalCode} <br />
+	</div> --%>
+	<!-- <div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">PASSWORD</span>
+		  <input type="text" class="form-control" placeholder="PASSWORD" aria-describedby="basic-addon1" id="password" name="password">
+    </div> -->
 <div class="grid-item">
 	<span class="label label-info" id="update_btn">수정</span>
-	<span class="label label-danger">삭제</span>
+	<span class="label label-danger" id="withdrawal">회원 탈퇴</span>
+</div>
 </div>
 </div>
 <jsp:include page="../home/bottom.jsp"/>    
 <script>
-$('#update_btn').click(function(){
+$('#update_btn').attr('style','cursor:pointer').click(function(){
 	location.assign('${ctx}/customer.do?cmd=cust_retrieve&page=update&customerID=${cust.customerID}');
 });
 $('#file_upload_btn').attr('style','cursor:pointer').click(function(){
@@ -61,5 +94,9 @@ $('#file_upload_btn').attr('style','cursor:pointer').click(function(){
 	.attr('action','${ctx}/customer.do?cmd=cust_file_upload&page=detail&customerID=${cust.customerID}')
 	.attr('enctype','multipart/form-data') 
 	.submit(); 
+});
+$('#withdrawal').attr('style','cursor:pointer').click(function(){
+	alert('탈퇴');
+	location.assign('${ctx}/customer.do?cmd=cust_delete&dir=home&page=main&customerID=${cust.customerID}');
 });
 </script>

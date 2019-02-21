@@ -38,6 +38,9 @@ public class Commander {
 		case CUST_FILE_UPLOAD:
 			cmd = new FileCommand(pxy);
 			break;
+		case CUST_DELETE:
+			cmd = new DeleteCommand(pxy);
+			break;
 		default:
 			break;
 		}

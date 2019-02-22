@@ -85,17 +85,17 @@
 </div>
 <jsp:include page="../home/bottom.jsp"/>    
 <script>
-$('#update_btn').attr('style','cursor:pointer').click(function(){
+$('#update_btn').attr('style','cursor:pointer').click(()=>{
 	location.assign('${ctx}/customer.do?cmd=cust_retrieve&page=update&customerID=${cust.customerID}');
 });
-$('#file_upload_btn').attr('style','cursor:pointer').click(function(){
+$('#file_upload_btn').attr('style','cursor:pointer').click(()=>{
 	$('#file_form')
 	.attr('method','post')
 	.attr('action','${ctx}/customer.do?cmd=cust_file_upload&page=detail&customerID=${cust.customerID}')
 	.attr('enctype','multipart/form-data') 
 	.submit(); 
 });
-$('#withdrawal').attr('style','cursor:pointer').click(function(){
+$('#withdrawal').attr('style','cursor:pointer').click(()=>{
 	alert('탈퇴');
 	location.assign('${ctx}/customer.do?cmd=cust_delete&dir=home&page=main&customerID=${cust.customerID}');
 });

@@ -62,7 +62,7 @@
 
 <jsp:include page="../home/bottom.jsp"/>
 <script>
-	$('.page').click(function(){
+	$('.page').click(()=>{
 		location.assign('${ctx}/customer.do?cmd=cust_list&page=list&page_num='+$(this).text());
 		});
 		// pageNum, pageSize, c

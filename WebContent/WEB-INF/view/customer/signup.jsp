@@ -54,7 +54,7 @@
 </div>
 <jsp:include page="../home/bottom.jsp"/>
 <script>
-$('#confirm_btn').click(function(){
+$('#confirm_btn').click(()=>{
 	var customerID = $('#customerID').val();
 	var customerName = $('#customerName').val();
 	var password = $('#password').val();

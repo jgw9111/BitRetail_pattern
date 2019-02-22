@@ -41,6 +41,9 @@ public class Commander {
 		case CUST_DELETE:
 			cmd = new DeleteCommand(pxy);
 			break;
+		case CATE_LIST: 
+			cmd = new ListCommand(pxy);
+			break;
 		default:
 			break;
 		}

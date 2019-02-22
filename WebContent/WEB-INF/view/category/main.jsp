@@ -52,7 +52,7 @@
 $('#emp_access').click(function(){
 	location.assign('employee.do?cmd=move&page=access')
 }); */
-$('#nav_item2 a').click(function(){
+$('#nav_item2 a').click(()=>{
 	alert('마이페이지 클릭');
 	location.assign('${ctx}/customer.do?cmd=cust_retrieve&page=detail&customerID=${customer.customerID}');
 });

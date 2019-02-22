@@ -22,7 +22,7 @@
 </div>
 <jsp:include page="../home/bottom.jsp"/>
 <script>
-$('#confirm_btn').click(function(){
+$('#confirm_btn').click(()=>{
 	var empno = $('#empno').val();
 	var name = $('#name').val();
 	$('#form')

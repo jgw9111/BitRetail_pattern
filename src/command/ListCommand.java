@@ -1,5 +1,6 @@
 package command;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import proxy.PageProxy;
 import proxy.Pagination;
 import proxy.Proxy;
 import proxy.RequestProxy;
+import service.CategoryServiceImpl;
 import service.CustomerServiceImpl;
 
 public class ListCommand extends Command{
@@ -25,30 +27,33 @@ public class ListCommand extends Command{
 		pagePxy.carryOut(paging);
 		
 		System.out.println("===list커맨드 진입===");
-		switch (Action.valueOf(request.getParameter("cmd").toUpperCase())) {
+		String flag = request.getParameter("cmd").toUpperCase();
+		List<?> list = new ArrayList<>();
+		switch (Action.valueOf(flag)) {
 		case CUST_LIST:
 			System.out.println("==list-cmd=="+request.getParameter("cmd"));
 			System.out.println("==list-page=="+request.getParameter("page"));
 			System.out.println("==list-page_num=="+request.getParameter("page_num"));
 			System.out.println("==list-page_size=="+request.getParameter("page_size"));
-
-			List<CustomerDTO> list = CustomerServiceImpl
+			list = CustomerServiceImpl
 								.getInstance()
 								.bringCustomersList(pagePxy);
-			request.setAttribute("list",list);
-			request.setAttribute("pagenation", paging);
 			
 			break;
 		case CUST_PHONE:
 			Map<String,Object> map = CustomerServiceImpl.getInstance().retreivePhone(null);
 			request.setAttribute("map",map);
 			break;
-		case PRODUCT_LIST :
-			
+		case CATE_LIST:
+			list = CategoryServiceImpl
+			.getInstance()
+			.bringCategoryLists(pagePxy);
 			break;
 		default:
 			break;
 		}
+		request.setAttribute("list",list);
+		request.setAttribute("pagenation", paging);
 		
 	}
 }

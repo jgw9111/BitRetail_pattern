@@ -1,3 +1,42 @@
+function People(name,age,gender,job){
+	this.name = name;
+	this.age = age;
+	this.gender = gender;
+	this.job = job;
+}
+function Customer1(name,age,gender,job,grade,custNo){
+	People.call(this,name,age,gender,job);
+	this.grade = grade;
+	this.custNo = custNo;
+}
+var test2 =(()=>{
+	let main = () =>{
+		let cust = new Customer1('정지우','28','여','학생','a','1234');
+		alert('고객 정보 : '+cust.name+','+cust.age+','+cust.gender+','+cust.job+','+cust.grade+','+cust.custNo);
+	}
+	return {main:main};
+})();
+
+
+function Product(name, price){
+	this.name = name;
+	this.price = price; 
+}
+function Food(name,price){
+	Product.call(this, name, price);
+	this.category = 'food';
+}
+
+var test = (()=>{
+	let food = ()=>{
+		let food = new Food('cheese',5);
+		alert(food.category);
+		alert(food.name);
+	}
+	return {food:food};
+})();
+
+
 var inherit = (()=>{
 	return{
 		main:()=>{
@@ -22,7 +61,7 @@ function Employee(){
 	getSalary : ()=>{return this._salary;},
 	getPosition : ()=>{return this._position;}
 	};
-};
+}
 
 function Customer(){
 	let _custNo,_grade;
@@ -32,7 +71,7 @@ function Customer(){
 	getCustNo : ()=>{return this._custNo;},
 	getGrade : ()=>{return this._grade;}
 	};
-};
+}
 
 //---------------- encap(은닉화)
 var encap = (()=>{ 

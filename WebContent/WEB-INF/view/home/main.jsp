@@ -36,7 +36,7 @@ $('#cust_login').click(()=>{
 	location.assign('customer.do?cmd=move&page=signin');
 });
 $('#oop_access').click(function(){
-	inherit.main();
+	test2.main();
 	//encap.main();
 });
 

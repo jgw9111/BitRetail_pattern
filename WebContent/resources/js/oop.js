@@ -4,18 +4,41 @@ function People(name,age,gender,job){
 	this.gender = gender;
 	this.job = job;
 }
-function Customer1(name,age,gender,job,grade,custNo){
-	People.call(this,name,age,gender,job);
+People.prototype.setName=name=>{this.name = name;};
+People.prototype.setAge=age=>{this.age = age;};
+People.prototype.setGender=gender=>{this.gender = gender;};
+People.prototype.setJob=job=>{this.job = job;};
+People.prototype.getName=()=>{return this.name;};
+People.prototype.getAge=()=>{return this.age;};
+People.prototype.getGender=()=>{return this.gender;};
+People.prototype.getJob=()=>{return this.job;};
+
+function Customer(grade,custNo){
+	People.apply(this,arguments);
 	this.grade = grade;
 	this.custNo = custNo;
 }
-var test2 =(()=>{
-	let main = () =>{
-		let cust = new Customer1('정지우','28','여','학생','a','1234');
-		alert('고객 정보 : '+cust.name+','+cust.age+','+cust.gender+','+cust.job+','+cust.grade+','+cust.custNo);
-	}
-	return {main:main};
-})();
+Customer.prototype = new People();
+Customer.prototype.setName=name=>{
+	//this.name = '[닉네임] '+name; < 자바 문법임 
+	Object.getPrototypeOf(Customer.prototype).setName('[닉네임] '+name);
+	};
+Customer.prototype.setGrade=grade=>{this.grade = grade;};
+Customer.prototype.setCustNo=custNo=>{this.custNo = custNo;};
+Customer.prototype.getGrade=()=>{return this.gender;};
+Customer.prototype.getCustNo=()=>{return this.custNo;};
+
+
+var test2 ={ main: ()=>{
+		let cust = new Customer();
+		cust.setName('정지우');
+		cust.setAge('28세');
+		cust.setGender('여');
+		cust.setJob('학생12');
+		cust.setGrade('a');
+		cust.setCustNo('154');
+		/*alert('고객 정보 : '+cust.getName()+','+cust.getAge()+','+cust.getGender()+','+cust.getJob()+','+cust.getGrade()+','+cust.getCustNo());*/
+		}};
 
 
 function Product(name, price){
@@ -37,7 +60,7 @@ var test = (()=>{
 })();
 
 
-var inherit = (()=>{
+/*var inherit = (()=>{
 	return{
 		main:()=>{
 			let emp1 = new Employee();
@@ -87,7 +110,7 @@ var encap = (()=>{
 })();
 
 var person = (()=>{
-	/*var _= this;*/
+	var _= this;
 	let _name, _age, _gender,_job; // let 지역변수, var 전역
 	return{setName:(name)=>{this._name = name;},
 		setAge:(Age)=>{this._Age = Age;},
@@ -100,4 +123,4 @@ var person = (()=>{
 		toString : ()=>{
 		        return this._name + ','+this._age + ','  +this._gender + ','+this._job}
 	} 
-})();
+})();*/

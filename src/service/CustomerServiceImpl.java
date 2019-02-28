@@ -6,7 +6,6 @@ import java.util.Map;
 import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
 import domain.CustomerDTO;
-import proxy.Pagination;
 import proxy.Proxy;
 
 public class CustomerServiceImpl implements CustomerService {
@@ -14,7 +13,6 @@ public class CustomerServiceImpl implements CustomerService {
 	private CustomerServiceImpl() { dao = CustomerDAOImpl.getInstance();}
 	public static CustomerServiceImpl getInstance() {return instance;}
 	CustomerDAO dao;
-
 
 	@Override
 	public void joinCustomer(CustomerDTO cus) {
